@@ -8,8 +8,11 @@
 // Librairies
 const express = require("express");
 const dotenv = require("dotenv").config();
+const connectDb = require("./config/dbConnection");
+const errorHandler = require("./middleware/errorHandler");
 
 // Server
+connectDb();
 const app = express();
 
 // Port
@@ -18,8 +21,12 @@ const port = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 
+
 // Routes
 app.use("/api/contacts", require("./routes/contactRoutes"));
+
+// Error handler
+app.use(errorHandler);
 
 // Start server
 app.listen(port, () => {

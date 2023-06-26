@@ -7,6 +7,8 @@
 
 // Librairies
 const asyncHandler = require("express-async-handler");
+
+// Models
 const Contact = require("../models/contactModel");
 
 // @desc: Get all contacts

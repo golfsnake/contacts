@@ -15,7 +15,10 @@ const Contact = require("../models/contactModel");
 // @route: GET /api/contacts
 // @access: Public
 const getContacts = asyncHandler(async (req, res) => {
+    // Get all contacts
     const contacts = await Contact.find({});
+
+    // Send response
     res.status(200).json(contacts);
 });
 
@@ -23,13 +26,18 @@ const getContacts = asyncHandler(async (req, res) => {
 // @route: POST /api/contacts
 // @access: Public
 const createContact = asyncHandler(async (req, res) => {
-    console.log("The request body is :", req.body);
     const {name, email, phone} = req.body;
+
+    // Check if all fields are filled
     if(!name || !email || !phone ) {
         res.status(400);
         throw new Error("Please fill all fields");
     }
+
+    // Create contact
     const contact = await Contact.create({name, email, phone});
+
+    // Send response
     res.status(201).json(contact);
 });
 
@@ -37,11 +45,16 @@ const createContact = asyncHandler(async (req, res) => {
 // @route: GET /api/contacts/:id
 // @access: Public
 const getContact = asyncHandler(async (req, res) => {
+    // Get contact
     const contact = await Contact.findById(req.params.id);
+
+    // Check if contact exists
     if(!contact) {
         res.status(404);
         throw new Error("Contact not found");
     }
+
+    // Send response
     res.status(200).json(contact);
 });
 
@@ -49,12 +62,19 @@ const getContact = asyncHandler(async (req, res) => {
 // @route: UPDATE /api/contacts/:id
 // @access: Public
 const updateContact = asyncHandler(async (req, res) => {
+    // Find contact
     const contact = await Contact.findById(req.params.id);
+
+    // Check if contact exists
     if(!contact) {
         res.status(404);
         throw new Error("Contact not found");
     }
+
+    // Update contact
     const updatedContact = await Contact.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true });
+
+    // Send response
     res.status(200).json(updatedContact);
 });
 
@@ -62,12 +82,19 @@ const updateContact = asyncHandler(async (req, res) => {
 // @route: DELETE /api/contacts/:id
 // @access: Public
 const deleteContact = asyncHandler(async (req, res) => {
+    // Find contact
     const contact = await Contact.findById(req.params.id);
+
+    // Check if contact exists
     if(!contact) {
         res.status(404);
         throw new Error("Contact not found");
     }
+
+    // Delete contact
     await Contact.deleteOne({_id: req.params.id});
+
+    // Send response
     res.status(200).json(contact);
 });
 

@@ -75,7 +75,7 @@ const loginUser = asyncHandler(async (req, res) => {
             },
         }, 
         process.env.JWT_SECRET, 
-        {expiresIn: "30s"});
+        {expiresIn: "15m"});
 
     res.status(200).json({accessToken});
 });
